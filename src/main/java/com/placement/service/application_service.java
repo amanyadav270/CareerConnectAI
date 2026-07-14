@@ -35,7 +35,6 @@ public class application_service {
             throw new IllegalArgumentException("Student or Drive not found.");
         }
 
-        // Using the Day 1 method names you generated for the repository
         if (app_repo.findByStudentIdAndDriveId(student_id, drive_id).isPresent()) {
             throw new IllegalStateException("Student has already applied to this drive.");
         }
