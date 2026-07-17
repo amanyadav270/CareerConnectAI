@@ -1,0 +1,32 @@
+{
+  "info": {
+    "name": "CareerConnect AI",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Student",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "url": {"raw": "http://localhost:8080/api/students", "host": ["http://localhost:8080/api/students"]},
+        "body": {
+          "mode": "raw",
+          "raw": "{\"id\":\"STU-001\",\"name\":\"Aman Yadav\",\"email\":\"aman@example.com\",\"programme\":\"B.Tech\",\"graduation_year\":2026,\"cgpa\":8.5,\"active_backlogs\":0,\"skills\":[\"Java\",\"Spring Boot\"]}"
+        }
+      }
+    },
+    {
+      "name": "Ask AI Assistant",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "url": {"raw": "http://localhost:8080/api/chat", "host": ["http://localhost:8080/api/chat"]},
+        "body": {
+          "mode": "raw",
+          "raw": "{\"student_id\":\"STU-001\",\"message\":\"How should I prepare for a backend role?\"}"
+        }
+      }
+    }
+  ]
+}
