@@ -32,17 +32,22 @@ This project requires a local installation of Ollama to process AI chat requests
 **Companies**
 * `POST /api/companies` - Register a new company
 * `GET /api/companies` - List all registered companies
+* `GET /api/companies/{companyId}` - Retrieve a single company
 
 **Placement Drives**
-* `POST /api/drives` - Create a new placement drive
-* `GET /api/drives` - List all placement drives
+* `POST /api/drives` - Create a new placement drive (404 if the referenced company doesn't exist)
+* `GET /api/drives` - List placement drives (optional `companyId`, `role`, `location` query filters)
+* `GET /api/drives/{driveId}` - Retrieve a single drive
 
 **Applications & Eligibility**
-* `POST /api/drives/{id}/applications` - Submit a job application
+* `POST /api/drives/{id}/applications` - Submit a job application (body: `{"studentId": "..."}`)
 * `GET /api/drives/{id}/eligibility/{studentId}` - Check if a student meets drive criteria
+* `GET /api/students/{studentId}/applications` - List a student's applications
+* `GET /api/applications/{applicationId}` - Retrieve a single application
+* `PATCH /api/applications/{applicationId}/status` - Move an application through its status lifecycle (body: `{"status": "UNDER_REVIEW"}`). Allowed transitions: `SUBMITTED → UNDER_REVIEW → SHORTLISTED → SELECTED`, with `REJECTED` reachable from `SUBMITTED`, `UNDER_REVIEW`, or `SHORTLISTED`. Invalid transitions return `409`.
 
 **AI Assistant**
-* `POST /api/chat` - Ask the AI career advisor a question (Context-aware)
+* `POST /api/chat` - Ask the AI career advisor a question. Body: `{"student_id": "...", "drive_id": "...", "message": "..."}`. `student_id` and `drive_id` are both optional; when both are supplied, the assistant grounds its answer in the same deterministic `EligibilityResult` returned by the eligibility endpoint (never invents eligibility).
 
 ---
 

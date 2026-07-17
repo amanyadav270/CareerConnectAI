@@ -21,6 +21,11 @@ public class global_exception_handler {
         return build_error_response(HttpStatus.CONFLICT, "CONFLICT_ERROR", ex.getMessage());
     }
 
+    @ExceptionHandler(not_found_exception.class)
+    public ResponseEntity<Map<String, Object>> handle_not_found(not_found_exception ex) {
+        return build_error_response(HttpStatus.NOT_FOUND, "NOT_FOUND", ex.getMessage());
+    }
+
     private ResponseEntity<Map<String, Object>> build_error_response(HttpStatus status, String code, String message) {
         Map<String, Object> error = new HashMap<>();
         error.put("timestamp", LocalDateTime.now());

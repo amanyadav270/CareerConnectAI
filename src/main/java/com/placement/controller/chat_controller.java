@@ -24,7 +24,7 @@ public class chat_controller {
         Map<String, Object> response = new HashMap<>();
         try {
             // Using getter methods to access the private fields
-            String answer = ai_service.ask_question(request.get_student_id(), request.get_message());
+            String answer = ai_service.ask_question(request.get_student_id(), request.get_drive_id(), request.get_message());
             
             response.put("answer", answer);
             response.put("advisory", true);

@@ -6,7 +6,7 @@ CareerConnect AI is a data-driven, local AI-assisted campus placement management
 ### In-Scope Features
 * **Profile Management**: Programmatic and API endpoints to manage student profiles, company detail registries, and placement drive details.
 * **Deterministic Eligibility Engine**: Strategy-based evaluation verifying minimum CGPA thresholds and maximum allowed active backlogs.
-* **Application Workflow Tracking**: Processing job applications through strict states (`SUBMITTED`, `REVIEW`, `ACCEPTED`, `REJECTED`) while enforcing zero-duplicate rules.
+* **Application Workflow Tracking**: Processing job applications through strict states (`SUBMITTED`, `UNDER_REVIEW`, `SHORTLISTED`, `SELECTED`, `REJECTED`) while enforcing zero-duplicate rules and validated status transitions (see `docs/api_contract.md`).
 * **Context-Aware Career Assistant**: Local AI chatbot integration that utilizes verified application context (e.g., student grades, repository reasons) to answer career prep questions.
 
 ### Out-of-Scope Features
