@@ -2,8 +2,8 @@ package com.placement.service;
 
 import com.placement.model.Student;
 import com.placement.model.PlacementDrive;
-import java.util.List;
+import com.placement.model.EligibilityResult;
 
 public interface eligibility_policy {
-    boolean is_eligible(Student target_student, PlacementDrive drive, List<String> reasons);
+    EligibilityResult evaluate(Student student, PlacementDrive drive);
 }

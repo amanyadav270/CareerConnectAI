@@ -42,4 +42,15 @@ public class student_controller {
         }
         return ResponseEntity.ok(student.get());
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Student> update_student(@PathVariable String id, @RequestBody Student updated_student) {
+        if (student_repo.findById(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        
+        updated_student.setId(id);
+        student_repo.save(updated_student);
+        return ResponseEntity.ok(updated_student);
+    }
 }

@@ -47,13 +47,19 @@ public class ollama_chat_client implements chat_client {
             headers.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<Map<String, Object>> entity = new HttpEntity<>(request, headers);
 
+            // Using a raw Map to catch the response avoids strict generic mismatch errors
+            @SuppressWarnings("rawtypes")
             ResponseEntity<Map> response = rest_template.postForEntity(url, entity, Map.class);
-            Map<String, Object> body = response.getBody();
+            
+            @SuppressWarnings("rawtypes")
+            Map body = response.getBody();
             
             if (body != null && body.containsKey("message")) {
-                Map<String, String> msg = (Map<String, String>) body.get("message");
-                return msg.get("content");
+                @SuppressWarnings("rawtypes")
+                Map msg = (Map) body.get("message");
+                return (String) msg.get("content");
             }
+            
             return "The assistant could not generate a response.";
         } catch (ResourceAccessException e) {
             // Triggers if Ollama is turned off or times out

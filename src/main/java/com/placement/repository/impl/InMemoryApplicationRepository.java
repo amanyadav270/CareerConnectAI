@@ -9,6 +9,9 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class InMemoryApplicationRepository implements ApplicationRepository {
     private final Map<String, Application> store = new ConcurrentHashMap<>();
 

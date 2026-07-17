@@ -23,7 +23,9 @@ public class chat_controller {
     public ResponseEntity<Map<String, Object>> ask_ai(@RequestBody chat_request_dto request) {
         Map<String, Object> response = new HashMap<>();
         try {
-            String answer = ai_service.ask_question(request.student_id, request.message);
+            // Using getter methods to access the private fields
+            String answer = ai_service.ask_question(request.get_student_id(), request.get_message());
+            
             response.put("answer", answer);
             response.put("advisory", true);
             return ResponseEntity.ok(response);
