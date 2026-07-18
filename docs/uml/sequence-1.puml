@@ -1,0 +1,38 @@
+@startuml
+actor "Student (Aman Yadav)" as Student
+participant "application_controller" as Ctrl
+participant "ApplicationService" as AppSvc
+participant "composite_EligibilityPolicy" as Policy
+database "InMemory Repositories" as DB
+
+Student -> Ctrl: POST /api/drives/{driveId}/applications
+Ctrl -> AppSvc: apply_to_drive(studentId, driveId)
+AppSvc -> DB: findById(student), findById(drive)
+DB --> AppSvc: student, drive (or empty -> 404)
+AppSvc -> DB: findByStudentIdAndDriveId()
+DB --> AppSvc: empty (no duplicate found)
+AppSvc -> AppSvc: check deadline not passed
+AppSvc -> Policy: evaluate(student, drive)
+Policy -> Policy: run cgpa/backlog/programme/\ngraduationYear/skills criteria
+Policy --> AppSvc: EligibilityResult(eligible=true, reasons=[])
+AppSvc -> DB: save(new_application, status=SUBMITTED)
+DB --> AppSvc: application_created
+AppSvc --> Ctrl: Application
+Ctrl --> Student: 201 Created (applicationId)
+
+alt Duplicate application
+    AppSvc -> DB: findByStudentIdAndDriveId()
+    DB --> AppSvc: existing application found
+    AppSvc --> Ctrl: throw IllegalStateException
+    Ctrl --> Student: 409 Conflict (DUPLICATE_APPLICATION)
+else Deadline passed
+    AppSvc -> AppSvc: deadline.isBefore(today) == true
+    AppSvc --> Ctrl: throw IllegalStateException
+    Ctrl --> Student: 409 Conflict (deadline passed)
+else Ineligible
+    AppSvc -> Policy: evaluate(student, drive)
+    Policy --> AppSvc: EligibilityResult(eligible=false, reasons=[...])
+    AppSvc --> Ctrl: throw IllegalStateException(reasons)
+    Ctrl --> Student: 409 Conflict (with reasons)
+end
+@enduml

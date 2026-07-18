@@ -1,0 +1,29 @@
+@startuml
+actor "Student (Aman Yadav)" as Student
+participant "chat_controller" as ChatCtrl
+participant "CareerAssistantService" as AISvc
+database "InMemory Repositories" as DB
+participant "ollama_ChatClient" as Adapter
+participant "Ollama Local API" as LLM
+
+Student -> ChatCtrl: POST /api/chat {message, studentId?, driveId?}
+ChatCtrl -> AISvc: ask_question(studentId, driveId, message)
+AISvc -> DB: findById(student), findById(drive)
+DB --> AISvc: verified student/drive context (if present)
+AISvc -> AISvc: evaluate(student, drive) via composite_EligibilityPolicy\n(grounds any eligibility claim in real data)
+AISvc -> Adapter: generate_response(system_prompt, verified_context + question)
+Adapter -> LLM: HTTP POST /api/chat (connect/read timeout from config)
+alt Success
+    LLM --> Adapter: JSON response (message.content)
+    Adapter --> AISvc: parsed_answer
+    AISvc --> ChatCtrl: advisory_answer
+    ChatCtrl --> Student: 200 OK { answer, model, advisory: true }
+else Ollama unreachable or timeout
+    LLM --> Adapter: connection refused / SocketTimeoutException
+    Adapter --> Adapter: catch ResourceAccessException
+    Adapter --> AISvc: throw RuntimeException("Ollama service unavailable")
+    AISvc --> ChatCtrl: exception propagates
+    ChatCtrl --> Student: 503 Service Unavailable (advisory-offline message)
+    note right of Student: All non-chat APIs (students, drives,\napplications) keep working - NFR-05
+end
+@enduml

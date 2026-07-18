@@ -1,0 +1,206 @@
+@startuml
+hide circle
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+
+package "model" {
+  class Student {
+    -id: String
+    -name: String
+    -email: String
+    -programme: String
+    -graduationYear: int
+    -cgpa: double
+    -activeBacklogs: int
+    -skills: List<String>
+  }
+
+  class Company {
+    -id: String
+    -name: String
+    -sector: String
+    -description: String
+  }
+
+  class PlacementDrive {
+    -id: String
+    -companyId: String
+    -role: String
+    -location: String
+    -packageAmount: double
+    -deadline: LocalDate
+    -createdAt: LocalDate
+    -requiredSkills: List<String>
+    -minCgpa: double
+    -maxBacklogsAllowed: int
+    -status: DriveStatus
+    -eligibleProgrammes: List<String>
+    -eligibleGraduationYears: List<Integer>
+  }
+
+  class Application {
+    -id: String
+    -studentId: String
+    -driveId: String
+    -status: ApplicationStatus
+    -submittedAt: LocalDateTime
+  }
+
+  class EligibilityResult {
+    -eligible: boolean
+    -reasons: List<String>
+  }
+
+  enum ApplicationStatus {
+    SUBMITTED
+    UNDER_REVIEW
+    SHORTLISTED
+    SELECTED
+    REJECTED
+  }
+
+  enum DriveStatus {
+    OPEN
+    CLOSED
+  }
+}
+
+package "repository" {
+  interface StudentRepository {
+    +save(Student): Student
+    +findById(String): Optional<Student>
+    +findByEmail(String): Optional<Student>
+    +findAll(): List<Student>
+  }
+  interface CompanyRepository {
+    +save(Company): void
+    +findById(String): Optional<Company>
+    +findByName(String): Optional<Company>
+    +findAll(): List<Company>
+  }
+  interface DriveRepository {
+    +save(PlacementDrive): PlacementDrive
+    +findById(String): Optional<PlacementDrive>
+    +findAll(): List<PlacementDrive>
+  }
+  interface ApplicationRepository {
+    +save(Application): Application
+    +findById(String): Optional<Application>
+    +findByStudentId(String): List<Application>
+    +findByStudentIdAndDriveId(String,String): Optional<Application>
+    +findAll(): List<Application>
+  }
+
+  class InMemoryStudentRepository
+  class in_memory_CompanyRepository
+  class InMemoryDriveRepository
+  class InMemoryApplicationRepository
+}
+
+package "service" {
+  interface EligibilityPolicy {
+    +evaluate(Student, PlacementDrive): EligibilityResult
+  }
+  interface EligibilityCriterion {
+    +check(Student, PlacementDrive): Optional<String>
+  }
+  interface ChatClient {
+    +generate_response(String, String): String
+  }
+
+  class ApplicationService {
+    +apply_to_drive(String, String): Application
+    +check_eligibility(String, String): EligibilityResult
+    +get_application(String): Application
+    +get_applications_for_student(String): List<Application>
+    +update_status(String, String): Application
+  }
+
+  class CareerAssistantService {
+    -SYSTEM_PROMPT: String
+    +ask_question(String, String, String): String
+  }
+
+  package "service.criteria" {
+    class CgpaCriterion
+    class BacklogCriterion
+    class ProgrammeCriterion
+    class GraduationYearCriterion
+    class SkillsCriterion
+  }
+
+  package "service.impl" {
+    class composite_EligibilityPolicy {
+      -criteria: List<EligibilityCriterion>
+      +evaluate(Student, PlacementDrive): EligibilityResult
+    }
+    class ollama_ChatClient {
+      -base_url: String
+      -model: String
+      -connect_timeout_seconds: int
+      -read_timeout_seconds: int
+      +generate_response(String, String): String
+    }
+  }
+}
+
+package "controller" {
+  class student_controller
+  class company_controller
+  class drive_controller
+  class application_controller
+  class chat_controller
+}
+
+package "exception" {
+  class NotFoundException
+  class GlobalExceptionHandler
+}
+
+' ---- Realizations (interface implementations) ----
+StudentRepository <|.. InMemoryStudentRepository
+CompanyRepository <|.. in_memory_CompanyRepository
+DriveRepository <|.. InMemoryDriveRepository
+ApplicationRepository <|.. InMemoryApplicationRepository
+
+EligibilityPolicy <|.. composite_EligibilityPolicy
+ChatClient <|.. ollama_ChatClient
+
+EligibilityCriterion <|.. CgpaCriterion
+EligibilityCriterion <|.. BacklogCriterion
+EligibilityCriterion <|.. ProgrammeCriterion
+EligibilityCriterion <|.. GraduationYearCriterion
+EligibilityCriterion <|.. SkillsCriterion
+
+' ---- Composition (Composite pattern: policy is made of many criteria) ----
+composite_EligibilityPolicy "1" *-- "many" EligibilityCriterion : composes
+
+' ---- Dependencies (constructor injection) ----
+ApplicationService ..> ApplicationRepository : uses
+ApplicationService ..> StudentRepository : uses
+ApplicationService ..> DriveRepository : uses
+ApplicationService ..> EligibilityPolicy : uses
+ApplicationService ..> EligibilityResult : produces
+ApplicationService ..> Application : produces
+
+CareerAssistantService ..> ChatClient : uses
+CareerAssistantService ..> StudentRepository : uses
+CareerAssistantService ..> DriveRepository : uses
+CareerAssistantService ..> EligibilityPolicy : uses
+
+student_controller ..> StudentRepository : uses
+company_controller ..> CompanyRepository : uses
+drive_controller ..> DriveRepository : uses
+drive_controller ..> CompanyRepository : uses
+application_controller ..> ApplicationService : uses
+chat_controller ..> CareerAssistantService : uses
+
+' ---- Entity associations / cardinalities ----
+PlacementDrive "many" --> "1" Company : belongs to
+Application "many" --> "1" Student : filed by
+Application "many" --> "1" PlacementDrive : targets
+Application "1" --> "1" ApplicationStatus
+PlacementDrive "1" --> "1" DriveStatus
+EligibilityPolicy ..> EligibilityResult : returns
+
+@enduml

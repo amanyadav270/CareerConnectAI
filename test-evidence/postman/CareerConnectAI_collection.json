@@ -8,11 +8,21 @@
       "name": "Create Student",
       "request": {
         "method": "POST",
-        "header": [{"key": "Content-Type", "value": "application/json"}],
-        "url": {"raw": "http://localhost:8080/api/students", "host": ["http://localhost:8080/api/students"]},
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/students",
+          "host": [
+            "http://localhost:8080/api/students"
+          ]
+        },
         "body": {
           "mode": "raw",
-          "raw": "{\"id\":\"STU-001\",\"name\":\"Aman Yadav\",\"email\":\"aman@example.com\",\"programme\":\"B.Tech\",\"graduation_year\":2026,\"cgpa\":8.5,\"active_backlogs\":0,\"skills\":[\"Java\",\"Spring Boot\"]}"
+          "raw": "{\"id\":\"STU-001\",\"name\":\"Aman Yadav\",\"email\":\"aman@example.com\",\"programme\":\"B.Tech\",\"graduationYear\":2026,\"cgpa\":8.5,\"activeBacklogs\":0,\"skills\":[\"Java\",\"Spring Boot\"]}"
         }
       }
     },
@@ -20,15 +30,30 @@
       "name": "Get Student",
       "request": {
         "method": "GET",
-        "url": {"raw": "http://localhost:8080/api/students/STU-001", "host": ["http://localhost:8080/api/students/STU-001"]}
+        "url": {
+          "raw": "http://localhost:8080/api/students/STU-001",
+          "host": [
+            "http://localhost:8080/api/students/STU-001"
+          ]
+        }
       }
     },
     {
       "name": "Update Student",
       "request": {
         "method": "PUT",
-        "header": [{"key": "Content-Type", "value": "application/json"}],
-        "url": {"raw": "http://localhost:8080/api/students/STU-001", "host": ["http://localhost:8080/api/students/STU-001"]},
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/students/STU-001",
+          "host": [
+            "http://localhost:8080/api/students/STU-001"
+          ]
+        },
         "body": {
           "mode": "raw",
           "raw": "{\"id\":\"STU-001\",\"name\":\"Aman Yadav\",\"email\":\"aman@example.com\",\"programme\":\"B.Tech\",\"graduationYear\":2026,\"cgpa\":8.7,\"activeBacklogs\":0,\"skills\":[\"Java\",\"Spring Boot\",\"SQL\"]}"
@@ -39,8 +64,18 @@
       "name": "Create Company",
       "request": {
         "method": "POST",
-        "header": [{"key": "Content-Type", "value": "application/json"}],
-        "url": {"raw": "http://localhost:8080/api/companies", "host": ["http://localhost:8080/api/companies"]},
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/companies",
+          "host": [
+            "http://localhost:8080/api/companies"
+          ]
+        },
         "body": {
           "mode": "raw",
           "raw": "{\"id\":\"COMP-001\",\"name\":\"Acme Corp\",\"sector\":\"Software\",\"description\":\"Enterprise SaaS\"}"
@@ -51,22 +86,42 @@
       "name": "Get Company",
       "request": {
         "method": "GET",
-        "url": {"raw": "http://localhost:8080/api/companies/COMP-001", "host": ["http://localhost:8080/api/companies/COMP-001"]}
+        "url": {
+          "raw": "http://localhost:8080/api/companies/COMP-001",
+          "host": [
+            "http://localhost:8080/api/companies/COMP-001"
+          ]
+        }
       }
     },
     {
       "name": "List Companies",
       "request": {
         "method": "GET",
-        "url": {"raw": "http://localhost:8080/api/companies", "host": ["http://localhost:8080/api/companies"]}
+        "url": {
+          "raw": "http://localhost:8080/api/companies",
+          "host": [
+            "http://localhost:8080/api/companies"
+          ]
+        }
       }
     },
     {
       "name": "Create Drive",
       "request": {
         "method": "POST",
-        "header": [{"key": "Content-Type", "value": "application/json"}],
-        "url": {"raw": "http://localhost:8080/api/drives", "host": ["http://localhost:8080/api/drives"]},
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/drives",
+          "host": [
+            "http://localhost:8080/api/drives"
+          ]
+        },
         "body": {
           "mode": "raw",
           "raw": "{\"id\":\"DRV-101\",\"companyId\":\"COMP-001\",\"role\":\"Backend Engineer\",\"location\":\"Bangalore\",\"packageAmount\":1200000,\"deadline\":\"2026-12-31\",\"requiredSkills\":[\"Java\",\"Spring Boot\"],\"minCgpa\":7.5,\"maxBacklogsAllowed\":0}"
@@ -77,8 +132,18 @@
       "name": "Create Drive - Unknown Company (expect 404)",
       "request": {
         "method": "POST",
-        "header": [{"key": "Content-Type", "value": "application/json"}],
-        "url": {"raw": "http://localhost:8080/api/drives", "host": ["http://localhost:8080/api/drives"]},
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/drives",
+          "host": [
+            "http://localhost:8080/api/drives"
+          ]
+        },
         "body": {
           "mode": "raw",
           "raw": "{\"id\":\"DRV-999\",\"companyId\":\"COMP-DOES-NOT-EXIST\",\"role\":\"Ghost Role\",\"location\":\"Nowhere\",\"packageAmount\":0,\"deadline\":\"2026-12-31\",\"requiredSkills\":[],\"minCgpa\":0,\"maxBacklogsAllowed\":0}"
@@ -89,29 +154,54 @@
       "name": "Get Drive",
       "request": {
         "method": "GET",
-        "url": {"raw": "http://localhost:8080/api/drives/DRV-101", "host": ["http://localhost:8080/api/drives/DRV-101"]}
+        "url": {
+          "raw": "http://localhost:8080/api/drives/DRV-101",
+          "host": [
+            "http://localhost:8080/api/drives/DRV-101"
+          ]
+        }
       }
     },
     {
       "name": "List Drives",
       "request": {
         "method": "GET",
-        "url": {"raw": "http://localhost:8080/api/drives", "host": ["http://localhost:8080/api/drives"]}
+        "url": {
+          "raw": "http://localhost:8080/api/drives",
+          "host": [
+            "http://localhost:8080/api/drives"
+          ]
+        }
       }
     },
     {
       "name": "Check Eligibility",
       "request": {
         "method": "GET",
-        "url": {"raw": "http://localhost:8080/api/drives/DRV-101/eligibility/STU-001", "host": ["http://localhost:8080/api/drives/DRV-101/eligibility/STU-001"]}
+        "url": {
+          "raw": "http://localhost:8080/api/drives/DRV-101/eligibility/STU-001",
+          "host": [
+            "http://localhost:8080/api/drives/DRV-101/eligibility/STU-001"
+          ]
+        }
       }
     },
     {
       "name": "Submit Application",
       "request": {
         "method": "POST",
-        "header": [{"key": "Content-Type", "value": "application/json"}],
-        "url": {"raw": "http://localhost:8080/api/drives/DRV-101/applications", "host": ["http://localhost:8080/api/drives/DRV-101/applications"]},
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/drives/DRV-101/applications",
+          "host": [
+            "http://localhost:8080/api/drives/DRV-101/applications"
+          ]
+        },
         "body": {
           "mode": "raw",
           "raw": "{\"studentId\":\"STU-001\"}"
@@ -122,8 +212,18 @@
       "name": "Submit Duplicate Application (expect 409)",
       "request": {
         "method": "POST",
-        "header": [{"key": "Content-Type", "value": "application/json"}],
-        "url": {"raw": "http://localhost:8080/api/drives/DRV-101/applications", "host": ["http://localhost:8080/api/drives/DRV-101/applications"]},
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/drives/DRV-101/applications",
+          "host": [
+            "http://localhost:8080/api/drives/DRV-101/applications"
+          ]
+        },
         "body": {
           "mode": "raw",
           "raw": "{\"studentId\":\"STU-001\"}"
@@ -134,22 +234,42 @@
       "name": "List Applications For Student",
       "request": {
         "method": "GET",
-        "url": {"raw": "http://localhost:8080/api/students/STU-001/applications", "host": ["http://localhost:8080/api/students/STU-001/applications"]}
+        "url": {
+          "raw": "http://localhost:8080/api/students/STU-001/applications",
+          "host": [
+            "http://localhost:8080/api/students/STU-001/applications"
+          ]
+        }
       }
     },
     {
       "name": "Get Application By Id",
       "request": {
         "method": "GET",
-        "url": {"raw": "http://localhost:8080/api/applications/APP-ID-HERE", "host": ["http://localhost:8080/api/applications/APP-ID-HERE"]}
+        "url": {
+          "raw": "http://localhost:8080/api/applications/APP-ID-HERE",
+          "host": [
+            "http://localhost:8080/api/applications/APP-ID-HERE"
+          ]
+        }
       }
     },
     {
       "name": "Update Application Status - Valid",
       "request": {
         "method": "PATCH",
-        "header": [{"key": "Content-Type", "value": "application/json"}],
-        "url": {"raw": "http://localhost:8080/api/applications/APP-ID-HERE/status", "host": ["http://localhost:8080/api/applications/APP-ID-HERE/status"]},
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/applications/APP-ID-HERE/status",
+          "host": [
+            "http://localhost:8080/api/applications/APP-ID-HERE/status"
+          ]
+        },
         "body": {
           "mode": "raw",
           "raw": "{\"status\":\"UNDER_REVIEW\"}"
@@ -160,8 +280,18 @@
       "name": "Update Application Status - Invalid Transition (expect 409)",
       "request": {
         "method": "PATCH",
-        "header": [{"key": "Content-Type", "value": "application/json"}],
-        "url": {"raw": "http://localhost:8080/api/applications/APP-ID-HERE/status", "host": ["http://localhost:8080/api/applications/APP-ID-HERE/status"]},
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/applications/APP-ID-HERE/status",
+          "host": [
+            "http://localhost:8080/api/applications/APP-ID-HERE/status"
+          ]
+        },
         "body": {
           "mode": "raw",
           "raw": "{\"status\":\"SUBMITTED\"}"
@@ -172,8 +302,18 @@
       "name": "Ask AI Assistant - General FAQ",
       "request": {
         "method": "POST",
-        "header": [{"key": "Content-Type", "value": "application/json"}],
-        "url": {"raw": "http://localhost:8080/api/chat", "host": ["http://localhost:8080/api/chat"]},
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/chat",
+          "host": [
+            "http://localhost:8080/api/chat"
+          ]
+        },
         "body": {
           "mode": "raw",
           "raw": "{\"message\":\"What documents are usually required for a campus placement application?\"}"
@@ -184,11 +324,163 @@
       "name": "Ask AI Assistant - Eligibility Explanation",
       "request": {
         "method": "POST",
-        "header": [{"key": "Content-Type", "value": "application/json"}],
-        "url": {"raw": "http://localhost:8080/api/chat", "host": ["http://localhost:8080/api/chat"]},
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/chat",
+          "host": [
+            "http://localhost:8080/api/chat"
+          ]
+        },
         "body": {
           "mode": "raw",
-          "raw": "{\"student_id\":\"STU-001\",\"drive_id\":\"DRV-101\",\"message\":\"Why am I not eligible and what should I improve?\"}"
+          "raw": "{\"studentId\":\"STU-001\",\"driveId\":\"DRV-101\",\"message\":\"Why am I not eligible and what should I improve?\"}"
+        }
+      }
+    },
+    {
+      "name": "Create Student - Blank Fields (expect 400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/students",
+          "host": [
+            "http://localhost:8080/api/students"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"id\": \"STU-BAD\", \"name\": \"\", \"email\": \"not-an-email\", \"programme\": \"\", \"graduationYear\": null, \"cgpa\": 15, \"activeBacklogs\": -1, \"skills\": []}"
+        }
+      }
+    },
+    {
+      "name": "Create Company - Duplicate Name (expect 409)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/companies",
+          "host": [
+            "http://localhost:8080/api/companies"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"id\": \"COMP-DUP\", \"name\": \"Acme Corp\", \"sector\": \"Software\", \"description\": \"Duplicate of COMP-001\"}"
+        }
+      }
+    },
+    {
+      "name": "Create Drive - Deadline Before Creation Date (expect 400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/drives",
+          "host": [
+            "http://localhost:8080/api/drives"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"id\": \"DRV-BAD\", \"companyId\": \"COMP-001\", \"role\": \"Backend Engineer\", \"location\": \"Bangalore\", \"packageAmount\": 1200000, \"deadline\": \"2020-01-01\", \"requiredSkills\": [\"Java\"], \"minCgpa\": 7.5, \"maxBacklogsAllowed\": 0}"
+        }
+      }
+    },
+    {
+      "name": "Create Drive - With Programme/Grad Year Restrictions",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/drives",
+          "host": [
+            "http://localhost:8080/api/drives"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"id\": \"DRV-102\", \"companyId\": \"COMP-001\", \"role\": \"Data Analyst\", \"location\": \"Pune\", \"packageAmount\": 900000, \"deadline\": \"2026-12-31\", \"requiredSkills\": [\"SQL\", \"Python\"], \"minCgpa\": 7.0, \"maxBacklogsAllowed\": 1, \"eligibleProgrammes\": [\"B.Tech\"], \"eligibleGraduationYears\": [2026]}"
+        }
+      }
+    },
+    {
+      "name": "Check Eligibility - Programme/Skill Mismatch (expect ineligible)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/drives/DRV-102/eligibility/STU-001",
+          "host": [
+            "http://localhost:8080/api/drives/DRV-102/eligibility/STU-001"
+          ]
+        }
+      }
+    },
+    {
+      "name": "List Drives - Filter By Status OPEN",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/drives?status=OPEN",
+          "host": [
+            "http://localhost:8080/api/drives?status=OPEN"
+          ]
+        }
+      }
+    },
+    {
+      "name": "List Drives - Unknown Status Value (expect 400)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/drives?status=ARCHIVED",
+          "host": [
+            "http://localhost:8080/api/drives?status=ARCHIVED"
+          ]
         }
       }
     }
